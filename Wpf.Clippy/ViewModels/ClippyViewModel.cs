@@ -124,6 +124,7 @@ namespace Wpf.Clippy.ViewModels
         {
             m_state = State.Showing;
             CanvasVisibility = Visibility.Visible;
+            PrepareIdleLoop();
 
             if (AnimationNames.Contains("Show"))
             {
@@ -132,10 +133,27 @@ namespace Wpf.Clippy.ViewModels
             }
 
             m_state = State.Active;
-            var idle = AnimationNames.FirstOrDefault(x => x.ToLower().Contains("idle")) ??
-                       AnimationNames.FirstOrDefault();
-            PlayAnimation(idle, AnimationMode.Loop);
+            PlayAnimation(m_loopingAnimation, AnimationMode.Loop);
         }
+
+        internal void ShowIdle()
+        {
+            m_state = State.Active;
+            CanvasVisibility = Visibility.Visible;
+            m_playOnceAnimation = null;
+            PrepareIdleLoop();
+            PlayAnimation(m_loopingAnimation, AnimationMode.Loop);
+        }
+
+        private void PrepareIdleLoop()
+        {
+            m_loopingAnimation = ResolveIdleAnimation();
+        }
+
+        private string ResolveIdleAnimation() =>
+            AnimationNames.FirstOrDefault(x => x.Equals("IdleSideToSide", StringComparison.OrdinalIgnoreCase))
+            ?? AnimationNames.FirstOrDefault(x => x.IndexOf("Idle", StringComparison.OrdinalIgnoreCase) >= 0)
+            ?? AnimationNames.FirstOrDefault();
 
         internal void Hide(Action onHidden)
         {

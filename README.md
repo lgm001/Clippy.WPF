@@ -10,6 +10,15 @@ Clippy.WPF is a C# library which allows the creation and interaction of Clippy c
 
 ![Clippy Preview](https://github.com/samoatesgames/Clippy.WPF/blob/main/Site/Bonzi.gif?raw=true)
 
+## Building
+
+Requires the [.NET 8 SDK](https://dotnet.microsoft.com/download) (or newer) on Windows.
+
+```bash
+dotnet build Wpf.Clippy/Wpf.Clippy.csproj
+dotnet run --project Clippy.Wpf.Demo/Clippy.Wpf.Demo.csproj
+```
+
 ## Features
 
  * Create and how animation Clippy characters
@@ -51,6 +60,12 @@ var character = new ClippyCharacter(Character.Clippy);
 
 // Show will present the character as a top most window
 character.Show();
+
+// Optionally show owned by a host window (not topmost), e.g. a dashboard shell
+character.Show(ownerWindow);
+
+// Show directly in an idle loop without the Show entrance animation
+character.ShowIdle(ownerWindow);
 
 // Hides a character, hidden characters can be re-shown by calling Show() again.
 character.Hide();

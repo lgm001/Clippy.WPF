@@ -85,11 +85,32 @@ namespace Wpf.Clippy
             OnDoubleClick?.Invoke(this);
         }
 
-        public void Show()
+        /// <summary>Shows the character, optionally owned by a host window instead of topmost.</summary>
+        public void Show(Window owner = null)
         {
+            ConfigureOwner(owner);
             m_control.Show();
             m_location = new Point(m_control.Left, m_control.Top);
             m_viewModel.Show();
+        }
+
+        /// <summary>Shows the character directly in an idle loop (skips the Show entrance animation).</summary>
+        public void ShowIdle(Window owner = null)
+        {
+            ConfigureOwner(owner);
+            m_control.Show();
+            m_location = new Point(m_control.Left, m_control.Top);
+            m_viewModel.ShowIdle();
+        }
+
+        private void ConfigureOwner(Window owner)
+        {
+            if (owner is not null)
+            {
+                m_control.Owner = owner;
+                m_control.Topmost = false;
+                m_control.WindowStartupLocation = WindowStartupLocation.Manual;
+            }
         }
 
         public void Hide()
