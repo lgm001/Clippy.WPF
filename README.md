@@ -12,7 +12,7 @@ Clippy.WPF is a C# library which allows the creation and interaction of Clippy c
 
 ## Building
 
-Requires the [.NET 8 SDK](https://dotnet.microsoft.com/download) (or newer) on Windows.
+Requires the [.NET 10 SDK](https://dotnet.microsoft.com/download) (or newer) on Windows.
 
 ```bash
 dotnet build Wpf.Clippy/Wpf.Clippy.csproj
